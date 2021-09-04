@@ -1,4 +1,4 @@
-# Basic of customer management
+# Basic of customer resource management
 
 ### Features
 1. Manage User
