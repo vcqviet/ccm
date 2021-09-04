@@ -6,7 +6,7 @@
 3. Forgot password
 4. Change password
 5. Configuration 
-6. Media manager (integrade with ckeditor)
+6. Media management (integrate with CKEditor)
 7. Manage User Role
 8. Manage Role Permission
 9. Login history/Lock IP user login
