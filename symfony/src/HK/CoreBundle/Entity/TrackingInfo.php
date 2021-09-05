@@ -4,6 +4,7 @@ namespace HK\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use HK\CoreBundle\Master\MasterEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * TrackingInfo
@@ -24,7 +25,7 @@ class TrackingInfo extends MasterEntity
      *
      * @ORM\OneToMany(targetEntity="TrackingInfoContent", mappedBy="parent", cascade={"persist"})
      */
-    protected $langContents;
+    protected ArrayCollection $langContents;
 
     /**
      *

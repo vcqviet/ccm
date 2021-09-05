@@ -1,6 +1,7 @@
 <?php
 namespace HK\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use HK\CoreBundle\Master\MasterEntity;
 
@@ -22,7 +23,7 @@ class AboutPage extends MasterEntity
      * @var AboutPageContent
      * @ORM\OneToMany(targetEntity="AboutPageContent", mappedBy="parent", cascade={"persist"})
      */
-    protected $langContents;
+    protected ArrayCollection $langContents;
 
     /**
      *

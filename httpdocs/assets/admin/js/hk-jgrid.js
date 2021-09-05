@@ -28,11 +28,12 @@ var BJGRID = {
     limit: 10,
     page: 1,
     renderFilter: function (data, $ob) {
+        //console.log(data, 'render');
         let $form = $('<form class="form-inline" id="rb-admin-form-filter"></form>');
         let $div = $('<div class="form-row align-items-center"></div>');
         for (var i = 0; i < data.length; i++) {
             var item = data[i];
-            switch (item.type) {
+            switch (item.type.toString().trim()) {
                 case 'text':
                     $div.append('<div class="col-auto"><div class="input-group mb-2"><input type="text" class="form-control ' + item.class + '" name="' + item.name + '" id="' + item.name + '" ' + item.attr + ' placeholder="' + item.placeholder + '" value="' + item.value + '"/></div></div>');
                     break;

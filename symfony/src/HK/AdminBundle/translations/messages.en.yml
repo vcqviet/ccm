@@ -268,3 +268,12 @@ lbl.updated-by: Updated by
 kpilocation: KPI-Vị trí
 kpiperson: KPI-Tele giao đơn
 kpirating: KPI-Tele gọi
+
+
+customer: Khách hàng
+customer.product-model: Sản phẩm
+customer.full-name: Họ tên
+customer.phone-number: Số ĐT
+customer.address: Địa chỉ
+customer.birthday: Ngày sinh nhật
+customer.order-date: Ngày mua hàng

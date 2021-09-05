@@ -14,8 +14,7 @@ use HK\CoreBundle\Helper\StringHelper;
  */
 class MasterEntity
 {
-
-    protected $langContents = [];
+    protected ArrayCollection $langContents;
 
     public function addLangContent($entity): self
     {

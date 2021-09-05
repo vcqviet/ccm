@@ -22,7 +22,7 @@ class NewsCategory extends MasterEntity
      * @var NewsCategoryContent
      * @ORM\OneToMany(targetEntity="NewsCategoryContent", mappedBy="parent", cascade={"persist"})
      */
-    protected $langContents;
+    protected ArrayCollection $langContents;
     /**
      *
      * @ORM\OneToMany(targetEntity="News", mappedBy="cate", cascade={"persist"})

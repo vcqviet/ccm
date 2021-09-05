@@ -66,22 +66,4 @@ class MasterApiController extends AbstractController
             'error' => $this->trans($message)
         ]);
     }
-
-    public function getRenderPagination($data, $routerName = '', $params = [])
-    {
-        if (intval($data['total_page']) <= 1) {
-            return '';
-        }
-        $url = '?';
-        if ($routerName != '') {
-            $url = '&';
-            if ($routerName != '&') {
-                $url = $this->generateUrl($routerName, $params);
-            }
-        }
-        
-        return $this->renderView('app/common/pagination.html.twig', [
-            'data' => PaginationHelper::instance()->getDataForRender($url, $data)
-        ]);
-    }
 }
