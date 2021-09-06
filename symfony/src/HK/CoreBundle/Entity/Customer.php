@@ -19,7 +19,7 @@ class Customer extends MasterEntity
 
     /**
      *
-     * @ORM\Column(type="string", nullable=true, length=255, unique=true)
+     * @ORM\Column(type="string", nullable=true, length=255)
      */
     private ?string $emailAddress;
 
@@ -52,7 +52,7 @@ class Customer extends MasterEntity
 
     /**
      *
-     * @ORM\Column(type="string", nullable=false, length=20, unique=true)
+     * @ORM\Column(type="string", nullable=false, length=20)
      */
     private ?string $phoneNumber;
 
@@ -68,7 +68,7 @@ class Customer extends MasterEntity
 
     /**
      *
-     * @ORM\Column(type="string", nullable=false, length=20, unique=true)
+     * @ORM\Column(type="string", nullable=false, length=20)
      */
     private ?string $fullName;
 
@@ -84,7 +84,7 @@ class Customer extends MasterEntity
 
     /**
      *
-     * @ORM\Column(type="string", nullable=false, length=20, unique=true)
+     * @ORM\Column(type="string", nullable=false, length=20)
      */
     private ?string $productModel;
 
