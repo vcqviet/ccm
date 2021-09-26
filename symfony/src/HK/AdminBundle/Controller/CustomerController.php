@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use HK\CoreBundle\Master\MasterController;
 use HK\CoreBundle\Entity\Customer;
 use HK\AdminBundle\FormType\CustomerType;
+use HK\CoreBundle\Entity\CustomerProductWarranty;
 use HK\CoreBundle\Helper\DateTimeHelper;
 use HK\CoreBundle\Helper\FormHelper;
 use Symfony\Component\VarDumper\VarDumper;
@@ -17,10 +18,10 @@ class CustomerController extends MasterController
     protected $entityClass = Customer::class;
     protected $entityTypeClass = CustomerType::class;
     protected $isIndexCustom = false;
-    protected $isAddEditCustom = false;
+    protected $isAddEditCustom = true;
     protected $icon = 'home';
-    protected $isDisplayOrder = true;
-    protected $isDisplayPublishedColumn = true;
+    protected $isDisplayOrder = false;
+    protected $isDisplayPublishedColumn = false;
     protected $hasContent = false;
     protected $hasPhotoModal = false;
     public function filterForm(Request $req): Response
@@ -52,8 +53,22 @@ class CustomerController extends MasterController
                 'is_filter' => true
             ],
             [
-                'name' => 'productModel',
-                'text' => $this->trans('customer.product-model'),
+                'name' => 'dateOfBirth',
+                'text' => $this->trans('customer.date-of-birth'),
+                'width' => '250px',
+                'is_content' => false,
+                'is_filter' => false
+            ],
+            [
+                'name' => 'productSerial',
+                'text' => $this->trans('customer.product-serial'),
+                'width' => '150px',
+                'is_content' => false,
+                'is_filter' => true
+            ],
+            [
+                'name' => 'gifSerial',
+                'text' => $this->trans('customer.gif-serial'),
                 'width' => '150px',
                 'is_content' => false,
                 'is_filter' => true
@@ -62,20 +77,6 @@ class CustomerController extends MasterController
                 'name' => 'phoneNumber',
                 'text' => $this->trans('customer.phone-number'),
                 'width' => '80px',
-                'is_content' => false,
-                'is_filter' => true
-            ],
-            [
-                'name' => 'emailAddress',
-                'text' => $this->trans('Email'),
-                'width' => '200px',
-                'is_content' => false,
-                'is_filter' => true
-            ],
-            [
-                'name' => 'address',
-                'text' => $this->trans('customer.address'),
-                'width' => 'auto',
                 'is_content' => false,
                 'is_filter' => true
             ]
@@ -100,9 +101,12 @@ class CustomerController extends MasterController
 
                 'fullName' => $item->getFullName(),
                 'productModel' => $item->getProductModel(),
+                'productSerial' => $item->getProductSerial(),
+                'gifSerial' => $item->getGifSerial(),
                 'phoneNumber' => $item->getPhoneNumber(),
                 'emailAddress' => $item->getEmailAddress(),
-                'address' => $item->getAddress()
+                'address' => $item->getAddress(),
+                'dateOfBirth' => $item->getDateOfBirth()->format('d/m/Y')
             ];
         }
         $this->gridData['items'] = $returnArr;
@@ -111,15 +115,20 @@ class CustomerController extends MasterController
 
     public function validateFormBefore(Request &$req)
     {
-
-
         $dataForm = $req->get($this->form->getName(), []);
-        if (isset($dataForm['dateOfBirth'])) {
-            $dataForm['dateOfBirth'] = new \DateTime(DateTimeHelper::instance()->fromDMYToYMD($dataForm['dateOfBirth']));
+
+        if (intval($dataForm['editId'] ?? -1) > 0 && count($dataForm['warranties'])) {
+            $data = $this->getDoctrine()->getRepository(CustomerProductWarranty::class)->bkGetData(['customer_id']);
+            foreach ($data as $dt) {
+                $this->getDoctrine()->getRepository(CustomerProductWarranty::class)->delete($dt->getId());
+            }
         }
-        if (isset($dataForm['orderDate'])) {
-            $dataForm['orderDate'] = new \DateTime(DateTimeHelper::instance()->fromDMYToYMD($dataForm['orderDate']));
-        }
+        // if (isset($dataForm['dateOfBirth'])) {
+        //     $dataForm['dateOfBirth'] = new \DateTime(DateTimeHelper::instance()->fromDMYToYMD($dataForm['dateOfBirth']));
+        // }
+        // if (isset($dataForm['orderDate'])) {
+        //     $dataForm['orderDate'] = new \DateTime(DateTimeHelper::instance()->fromDMYToYMD($dataForm['orderDate']));
+        // }
         $req->request->set($this->form->getName(), $dataForm);
         return parent::validateFormBefore($req);
     }

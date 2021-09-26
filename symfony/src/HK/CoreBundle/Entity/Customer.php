@@ -2,6 +2,8 @@
 
 namespace HK\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use HK\CoreBundle\Master\MasterEntity;
 
@@ -52,7 +54,7 @@ class Customer extends MasterEntity
 
     /**
      *
-     * @ORM\Column(type="string", nullable=false, length=20)
+     * @ORM\Column(type="string", nullable=true, length=20)
      */
     private ?string $phoneNumber;
 
@@ -68,7 +70,7 @@ class Customer extends MasterEntity
 
     /**
      *
-     * @ORM\Column(type="string", nullable=false, length=20)
+     * @ORM\Column(type="string", nullable=true, length=20)
      */
     private ?string $fullName;
 
@@ -84,7 +86,7 @@ class Customer extends MasterEntity
 
     /**
      *
-     * @ORM\Column(type="string", nullable=false, length=20)
+     * @ORM\Column(type="string", nullable=true, length=20)
      */
     private ?string $productModel;
 
@@ -97,6 +99,39 @@ class Customer extends MasterEntity
     {
         $this->productModel = $val;
     }
+
+    /**
+     *
+     * @ORM\Column(type="string",nullable=true,  length=20)
+     */
+    private ?string $productSerial;
+
+    public function getProductSerial(): ?string
+    {
+        return $this->productSerial ?? '';
+    }
+
+    public function setProductSerial(?string $val)
+    {
+        $this->productSerial = $val;
+    }
+
+    /**
+     *
+     * @ORM\Column(type="string", nullable=true, length=20)
+     */
+    private ?string $gifSerial;
+
+    public function getGifSerial(): ?string
+    {
+        return $this->gifSerial ?? '';
+    }
+
+    public function setGifSerial(?string $val)
+    {
+        $this->gifSerial = $val;
+    }
+
 
     /**
      *
@@ -130,8 +165,33 @@ class Customer extends MasterEntity
         $this->orderDate = $val;
     }
 
+    /**
+     * @var Collection | CustomerProductWarranty[]
+     * 
+     * @ORM\OneToMany(targetEntity="CustomerProductWarranty", mappedBy="customer", cascade={"persist"})
+     */
+    private $warranties;
+
+    public function addWarranty(CustomerProductWarranty $entity)
+    {
+        $entity->setCustomer($this);
+        $this->warranties[] = $entity;
+    }
+
+    public function removeWarranty(CustomerProductWarranty $entity)
+    {
+        $this->warranties->removeElement($entity);
+    }
+
+    function getWarranties()
+    {
+        return $this->warranties;
+    }
+
     public function __construct()
     {
         parent::__construct();
+
+        $this->warranties = new ArrayCollection();
     }
 }
