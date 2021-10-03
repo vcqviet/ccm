@@ -2,24 +2,27 @@
 
 namespace HK\AdminBundle\Controller;
 
+use HK\AdminBundle\FormType\CustomerType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use HK\CoreBundle\Master\MasterController;
+use HK\CoreBundle\Entity\Warranty;
+use HK\AdminBundle\FormType\WarrantyType;
 use HK\CoreBundle\Entity\Customer;
-use HK\AdminBundle\FormType\CustomerType;
 use HK\CoreBundle\Entity\CustomerProductWarranty;
+use HK\CoreBundle\Entity\WarrantyProductWarranty;
 use HK\CoreBundle\Helper\DateTimeHelper;
 use HK\CoreBundle\Helper\FormHelper;
 use Symfony\Component\VarDumper\VarDumper;
 
-class CustomerController extends MasterController
+class WarrantyController extends MasterController
 {
 
     protected $entityClass = Customer::class;
     protected $entityTypeClass = CustomerType::class;
-    protected $isIndexCustom = false;
+    protected $isIndexCustom = true;
     protected $isAddEditCustom = true;
-    protected $icon = 'users';
+    protected $icon = 'package';
     protected $isDisplayOrder = false;
     protected $isDisplayPublishedColumn = false;
     protected $hasContent = false;
@@ -52,13 +55,7 @@ class CustomerController extends MasterController
                 'is_content' => false,
                 'is_filter' => true
             ],
-            [
-                'name' => 'dateOfBirth',
-                'text' => $this->trans('customer.date-of-birth'),
-                'width' => '250px',
-                'is_content' => false,
-                'is_filter' => false
-            ],
+
             [
                 'name' => 'productSerial',
                 'text' => $this->trans('customer.product-serial'),
@@ -74,16 +71,17 @@ class CustomerController extends MasterController
                 'is_filter' => true
             ],
             [
-                'name' => 'phoneNumber',
-                'text' => $this->trans('customer.phone-number'),
-                'width' => '80px',
+                'name' => 'warranty',
+                'text' => $this->trans('warranty'),
+                'width' => 'auto',
                 'is_content' => false,
-                'is_filter' => true
+                'is_filter' => false
             ]
         ];
 
         $this->filterDefault($req);
 
+        $this->dataFilter['is_warranty'] = true;
         $this->gridData = $this->repository->bkGetData($this->dataFilter);
         $returnArr = [];
         /**
@@ -91,6 +89,13 @@ class CustomerController extends MasterController
          */
         foreach ($this->gridData['items'] as $item) {
             // $item = new CmsRole();
+            $warrantyText = '';
+            /**
+             * @var CustomerProductWarranty $w
+             */
+            foreach ($item->getWarranties() as $w) {
+                $warrantyText .= $w->getWarrantyDate()->format('d/m/Y') . ': <span class="' . $w->getStatus() . '">' . $w->getStatus() . '</span><br/>';
+            }
             $returnArr[] = [
                 'id' => $item->getId(),
                 'isPublished' => $item->getIsPublished(),
@@ -106,13 +111,18 @@ class CustomerController extends MasterController
                 'phoneNumber' => $item->getPhoneNumber(),
                 'emailAddress' => $item->getEmailAddress(),
                 'address' => $item->getAddress(),
-                'dateOfBirth' => $item->getDateOfBirth()->format('d/m/Y')
+                'dateOfBirth' => $item->getDateOfBirth()->format('d/m/Y'),
+                'warranty' => $warrantyText
             ];
         }
         $this->gridData['items'] = $returnArr;
+        unset($this->gridActions['99']);
         return parent::filter($req);
     }
-
+    public function addDefaultMenuControl(): void
+    {
+        $this->menuControls = [];
+    }
     public function validateFormBefore(Request &$req)
     {
         $dataForm = $req->get($this->form->getName(), []);

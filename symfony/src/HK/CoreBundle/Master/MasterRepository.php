@@ -81,7 +81,8 @@ class MasterRepository extends EntityRepository
             }
             $this->getEntityManager()->commit();
             return true;
-        } catch (\Exception $ex) { }
+        } catch (\Exception $ex) {
+        }
         $this->getEntityManager()->rollback();
         return false;
     }
@@ -301,7 +302,39 @@ class MasterRepository extends EntityRepository
         }
         $query = $this->customQuery($data, $query);
         $data = $this->dataTemp;
+        $query = $this->addFilterKeyword($data, $query);
 
+        if (isset($data['is_set_display_order']) && count($data['is_set_display_order'])) {
+            $query = $query->andWhere('tbl.displayOrder ' . ($data['is_set_display_order']['type'] == DisplayOrderHelper::$_TYPE_DOWN ? '<' : '>') . ' :is_set_display_order')->setParameter(':is_set_display_order', $data['is_set_display_order']['order']);
+        }
+        if (isset($data['is_published']) && intval($data['is_published'])) {
+            // $now = new \DateTime(null, new \DateTimeZone('Asia/Ho_Chi_Minh'));
+            $query = $query->andWhere('tbl.isPublished = 1');
+            // ->andWhere('(tbl.publishedFromAt IS NULL OR tbl.publishedFromAt >= :now_0)')
+            // ->andWhere('(tbl.publishedToAt IS NULL OR tbl.publishedToAt <= :now_24)')
+            // ->setParameter('now_0', $now->format(DateTimeHelper::$DATE_FORMAT) . ' ' . DateTimeHelper::$TIME_HOUR_0)
+            // ->setParameter('now_24', $now->format(DateTimeHelper::$DATE_FORMAT) . ' ' . DateTimeHelper::$TIME_HOUR_24);
+        }
+        if (isset($data['is_published_admin']) && intval($data['is_published_admin']) >= 0) {
+            $query = $query->andWhere('tbl.isPublished = :is_published_admin')->setParameter(':is_published_admin', $data['is_published_admin']);
+        }
+        if (isset($data['is_deleted']) && intval($data['is_deleted'])) {
+            $query = $query->andWhere('tbl.isDeleted = 0');
+        }
+        if (isset($data['display_orders']) && count($data['display_orders'])) {
+            foreach ($data['display_orders'] as $col => $orderType) {
+                $query = $query->addOrderBy('tbl.' . $col, $orderType);
+            }
+        } else {
+            $query = $query->addOrderBy('tbl.displayOrder', 'DESC')
+                ->addOrderBy('tbl.createdAt', 'DESC')
+                ->addOrderBy('tbl.id', 'DESC');
+        }
+        return $this->getDataWithPagination($data, $query);
+    }
+
+    public function addFilterKeyword($data, $query)
+    {
         if (isset($data['keyword']) && is_array($data['keyword'])) {
             if (!isset($data['keyword']['search_fields']) || count($data['keyword']['search_fields']) <= 0) {
                 $data['keyword'] = [
@@ -334,33 +367,11 @@ class MasterRepository extends EntityRepository
                 $query = $query->setParameter('keyword', $data['keyword']['search_by']);
             }
         }
-        if (isset($data['is_set_display_order']) && count($data['is_set_display_order'])) {
-            $query = $query->andWhere('tbl.displayOrder ' . ($data['is_set_display_order']['type'] == DisplayOrderHelper::$_TYPE_DOWN ? '<' : '>') . ' :is_set_display_order')->setParameter(':is_set_display_order', $data['is_set_display_order']['order']);
-        }
-        if (isset($data['is_published']) && intval($data['is_published'])) {
-            // $now = new \DateTime(null, new \DateTimeZone('Asia/Ho_Chi_Minh'));
-            $query = $query->andWhere('tbl.isPublished = 1');
-                // ->andWhere('(tbl.publishedFromAt IS NULL OR tbl.publishedFromAt >= :now_0)')
-                // ->andWhere('(tbl.publishedToAt IS NULL OR tbl.publishedToAt <= :now_24)')
-                // ->setParameter('now_0', $now->format(DateTimeHelper::$DATE_FORMAT) . ' ' . DateTimeHelper::$TIME_HOUR_0)
-                // ->setParameter('now_24', $now->format(DateTimeHelper::$DATE_FORMAT) . ' ' . DateTimeHelper::$TIME_HOUR_24);
-        }
-        if (isset($data['is_published_admin']) && intval($data['is_published_admin']) >= 0) {
-            $query = $query->andWhere('tbl.isPublished = :is_published_admin')->setParameter(':is_published_admin', $data['is_published_admin']);
-        }
-        if (isset($data['is_deleted']) && intval($data['is_deleted'])) {
-            $query = $query->andWhere('tbl.isDeleted = 0');
-        }
-        if (isset($data['display_orders']) && count($data['display_orders'])) {
-            foreach ($data['display_orders'] as $col => $orderType) {
-                $query = $query->addOrderBy('tbl.' . $col, $orderType);
-            }
-        } else {
-            $query = $query->addOrderBy('tbl.displayOrder', 'DESC')
-                ->addOrderBy('tbl.createdAt', 'DESC')
-                ->addOrderBy('tbl.id', 'DESC');
-        }
+        return $query;
+    }
 
+    public function getDataWithPagination($data, $query)
+    {
         if (isset($data['pagination']) && count($data['pagination'])) {
             if (!isset($data['pagination']['page']) || intval($data['pagination']['page']) <= 0) {
                 $data['pagination']['page'] = 1;

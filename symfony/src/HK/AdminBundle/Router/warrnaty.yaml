@@ -1,0 +1,53 @@
+hk_admin.warranty:
+    path: /warranty/{page}/{limit}
+    controller: HK\AdminBundle\Controller\WarrantyController::index
+    defaults:
+        page: 1
+        limit: 20
+    requirements:
+        page: \d+
+        limit: \d+
+hk_admin.warranty.filter:
+    path: /warranty/filter/{page}/{limit}
+    controller: HK\AdminBundle\Controller\WarrantyController::filter
+    defaults:
+        page: 1
+        limit: 20
+    requirements:
+        page: \d+
+        limit: \d+
+hk_admin.warranty.lang_item:
+    path: /warranty/item-lang
+    controller: HK\AdminBundle\Controller\WarrantyController::itemLang
+hk_admin.warranty.filter_form:
+    path: /warranty/filter-form
+    controller: HK\AdminBundle\Controller\WarrantyController::filterForm
+hk_admin.warranty.menu_control:
+    path: /warranty/menu-control
+    controller: HK\AdminBundle\Controller\WarrantyController::menuControl
+hk_admin.warranty.add:
+    path: /warranty/add
+    controller: HK\AdminBundle\Controller\WarrantyController::addEdit
+hk_admin.warranty.order:
+    path: /warranty/set-order
+    controller: HK\AdminBundle\Controller\WarrantyController::order
+    methods:
+    - POST
+hk_admin.warranty.edit:
+    path: /warranty/edit/{id}
+    controller: HK\AdminBundle\Controller\WarrantyController::addEdit
+    defaults:
+        id: -1
+hk_admin.warranty.publish:
+    path: /warranty/publish
+    controller: HK\AdminBundle\Controller\WarrantyController::publish
+    methods:
+    - POST
+hk_admin.warranty.delete:
+    path: /warranty/delete
+    controller: HK\AdminBundle\Controller\WarrantyController::delete
+    methods:
+    - POST
+hk_admin.warranty.title-existing:
+    path: /warranty/title-existing
+    controller: HK\AdminBundle\Controller\WarrantyController::titleLangExisting

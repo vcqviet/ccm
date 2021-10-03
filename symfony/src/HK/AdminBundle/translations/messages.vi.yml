@@ -305,6 +305,7 @@ customer.full-name: Họ tên
 customer.phone-number: Số ĐT
 customer.address: Địa chỉ
 customer.birthday: Ngày sinh
+customer.date-of-birth: Ngày sinh
 customer.order-date: Ngày mua
 customer.product-serial: Số Series máy
 customer.gif-serial: Số Series quá tặng
@@ -313,8 +314,10 @@ customer.full-name-required: Nhập họ tên người mua
 customer.order-date-required: Nhập vào ngày mua
 customer.warranty: "Thông tin bảo trì"
 
+warranty: Lịch bảo trì
 warranty.date: Ngày bảo trì
 warranty.date-required: Nhập vào ngày bảo trì
 warranty.status-content: Nội dung bảo trỉ
+warranty.status: Tình trạng
 
 

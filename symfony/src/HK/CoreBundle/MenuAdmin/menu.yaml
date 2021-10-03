@@ -1,29 +1,32 @@
 website:
   type: session
   menu:
-    news-info:
-      type: group
-      icon: grid
-      menu:
-        newscategory:
-          url: /news-category
-          icon: home
-        news:
-          url: /news
-          icon: home
-    homepage:
-          type: group
-          icon: home
-          menu:
-            homeslider:
-              url: /home-slider
-              icon: home
-            trackinginfo:
-              url: /tracking-info
-              icon: home
+    # news-info:
+    #   type: group
+    #   icon: grid
+    #   menu:
+    #     newscategory:
+    #       url: /news-category
+    #       icon: home
+    #     news:
+    #       url: /news
+    #       icon: home
+    # homepage:
+    #       type: group
+    #       icon: home
+    #       menu:
+    #         homeslider:
+    #           url: /home-slider
+    #           icon: home
+    #         trackinginfo:
+    #           url: /tracking-info
+    #           icon: home
     customer:
       url: /customer
-      icon: home
+      icon: users
+    warranty:
+      url: /warranty
+      icon: package
 administrator-setting:
   type: session
   menu:
