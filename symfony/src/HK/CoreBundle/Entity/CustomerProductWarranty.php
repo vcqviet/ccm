@@ -16,6 +16,11 @@ use Google\Service\Monitoring\Custom;
  */
 class CustomerProductWarranty extends MasterEntity
 {
+
+    public static $_STATUS_WAITING = 'WAITING';
+    public static $_STATUS_DONE = 'DONE';
+    public static $_STATUS_CANCEL = 'CANCEL';
+
     /**
      *
      * @var Customer
@@ -62,6 +67,24 @@ class CustomerProductWarranty extends MasterEntity
 
     /**
      *
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    protected $status;
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus($val)
+    {
+        $this->status = $val;
+    }
+
+    /**
+     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private ?\DateTime $warrantyDate;
@@ -79,5 +102,6 @@ class CustomerProductWarranty extends MasterEntity
     public function __construct()
     {
         parent::__construct();
+        $this->status = self::$_STATUS_WAITING;
     }
 }

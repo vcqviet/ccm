@@ -479,8 +479,14 @@ class MasterController extends AbstractController
         foreach ($this->gridActions as $act) {
             $actions[] = $act;
         }
+        $rtGridColumns = array_filter($this->gridColumns, function ($item) {
+            if (isset($item['is_show']) && !$item['is_show']) {
+                return false;
+            }
+            return true;
+        });
         $data = [
-            'columns' => $this->gridColumns,
+            'columns' => $rtGridColumns,
             'actions' => $actions,
             'data' => $this->gridData,
             'dataRender' => $this->dataRender

@@ -7,6 +7,7 @@ use HK\CoreBundle\Helper\FormHelper;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use HK\CoreBundle\Entity\CustomerProductWarranty;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -39,6 +40,23 @@ class WarrantyType extends AbstractType
                 FormHelper::$_DATA_IS_MULTI_LANGUAGES => '0',
                 FormHelper::$_VALIDATE_CLASS_REQUIRED => '0',
                 'row' => '5'
+            ]
+        ])->add('status', ChoiceType::class, [
+            'label' => 'warranty.status',
+            'choices' => [
+                'Chờ bảo trì' => CustomerProductWarranty::$_STATUS_WAITING,
+                'Xong' => CustomerProductWarranty::$_STATUS_DONE,
+                'Hủy' => CustomerProductWarranty::$_STATUS_CANCEL
+            ],
+            'choice_attr' => [
+                'Chờ bảo trì' => ['data-color' => 'Yellow'],
+                'Xong' => ['data-color' => 'Green'],
+                'Hủy' => ['data-color' => 'Red'],
+            ],
+            'attr' => [
+                'class' => FormHelper::$_FORM_VALIDATE_CLASS,
+                FormHelper::$_DATA_IS_MULTI_LANGUAGES => '0',
+                FormHelper::$_VALIDATE_CLASS_REQUIRED => '0'
             ]
         ]);
     }
