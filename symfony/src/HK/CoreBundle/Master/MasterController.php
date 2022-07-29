@@ -506,7 +506,7 @@ class MasterController extends AbstractController
             $ids = array_merge($ids, $params['ids']);
         }
         foreach ($ids as $id) {
-            $this->repository->delete($id);
+            $this->repository->setIsDeleted($id, true);
         }
         $data = [
             'message' => $this->trans('grid.delete-success'),
