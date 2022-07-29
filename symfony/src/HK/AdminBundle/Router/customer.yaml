@@ -51,3 +51,8 @@ hk_admin.customer.delete:
 hk_admin.customer.title-existing:
     path: /customer/title-existing
     controller: HK\AdminBundle\Controller\CustomerController::titleLangExisting
+hk_admin.customer.import:
+    path: /customer/import
+    controller: HK\AdminBundle\Controller\CustomerController::import
+    methods:
+    - POST

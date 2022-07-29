@@ -20,7 +20,6 @@ class Customer extends MasterEntity
 
 
     /**
-     *
      * @ORM\Column(type="string", nullable=true, length=255)
      */
     private ?string $emailAddress;
@@ -36,7 +35,21 @@ class Customer extends MasterEntity
     }
 
     /**
-     *
+     * @ORM\Column(type="string", nullable=true, length=255)
+     */
+    private ?string $bodySerial;
+
+    public function getBodySerial(): ?string
+    {
+        return $this->bodySerial ?? '';
+    }
+
+    public function setBodySerial(?string $val)
+    {
+        $this->bodySerial = $val;
+    }
+
+    /**
      * @ORM\Column(type="string", nullable=true, length=512)
      */
     private ?string $address;
@@ -53,8 +66,7 @@ class Customer extends MasterEntity
 
 
     /**
-     *
-     * @ORM\Column(type="string", nullable=true, length=20)
+     * @ORM\Column(type="string", nullable=true, length=255)
      */
     private ?string $phoneNumber;
 
@@ -69,8 +81,7 @@ class Customer extends MasterEntity
     }
 
     /**
-     *
-     * @ORM\Column(type="string", nullable=true, length=20)
+     * @ORM\Column(type="string", nullable=true, length=255)
      */
     private ?string $fullName;
 
@@ -85,8 +96,7 @@ class Customer extends MasterEntity
     }
 
     /**
-     *
-     * @ORM\Column(type="string", nullable=true, length=20)
+     * @ORM\Column(type="string", nullable=true, length=255)
      */
     private ?string $productModel;
 
@@ -101,8 +111,7 @@ class Customer extends MasterEntity
     }
 
     /**
-     *
-     * @ORM\Column(type="string",nullable=true,  length=20)
+     * @ORM\Column(type="string",nullable=true,  length=255)
      */
     private ?string $productSerial;
 
@@ -117,8 +126,7 @@ class Customer extends MasterEntity
     }
 
     /**
-     *
-     * @ORM\Column(type="string", nullable=true, length=20)
+     * @ORM\Column(type="string", nullable=true, length=255)
      */
     private ?string $gifSerial;
 
@@ -134,7 +142,6 @@ class Customer extends MasterEntity
 
 
     /**
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private ?\DateTime $dateOfBirth;
@@ -150,7 +157,6 @@ class Customer extends MasterEntity
     }
 
     /**
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private ?\DateTime $orderDate;

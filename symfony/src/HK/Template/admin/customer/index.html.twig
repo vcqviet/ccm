@@ -12,4 +12,60 @@
         <div class="row rb-paginator-render rb-float-right mr-5" rb-data-paginator-length="{{'PAGINATOR_LENGTH'|env}}"></div>
         <div class="rb-clear"></div>
     </section>
+    <div class="modal fade" id="rb-modal-import" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="max-width: 80%; min-width: 300px; width: 50%">
+            <div class="modal-content border-0">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="rb-modal-page-title">
+                        Import
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding: 20px">
+                    <form name="" id="rb-form-import" action="/hkadmin/cost-management/import" method="post" enctype="multipart/form-data">
+                        <div class=" form-group">
+                            <input type="file" name="hfile_import" id="" class="rb-check" rb-validate-required="1" rb-validate-required-error="Chọn file import"/>
+                        </div>
+                        <div class=" form-group">
+                            <button id="" class="btn btn-primary rb-form" rb-ref-id="rb-form-import" rb-data-url="{{path('hk_admin.customer.import')}}" rb-form-is-multipart="1" rb-callback-after="badmin_menuImportCallback">
+                                Import
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+<script>
+
+        function badmin_menuImportBefore (data) {
+            hidemodal ();
+            $ ('#rb-modal-import').modal ('show');
+            return false;
+        }
+        function hopen_import (data) {
+            $ ('#rb-modal-import').modal ('show');
+            return false;
+        }
+        function badmin_menuImportCallback (data) {
+            hidemodal ();
+            if (BCOMMON.isOk (data)) {
+                // trigger
+                $ ('#rb-button-filter').trigger ('click');
+                return;
+            }
+            BALERT.showError (data);
+        }
+        function hidemodal () {
+            $ ('#rb-modal-import').modal ('hide');
+            $ ('#rb-form-import').trigger ("reset");
+        }
+</script>
 {% endblock %}

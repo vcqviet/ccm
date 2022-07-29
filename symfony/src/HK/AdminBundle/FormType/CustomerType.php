@@ -65,6 +65,14 @@ class CustomerType extends MasterFormType
                 FormHelper::$_VALIDATE_CLASS_REQUIRED => '0',
                 FormHelper::$_REF_CLASS => FormHelper::$_FORM_CLASS_EDIT_ID
             ]
+        ])->add('productModel', TextType::class, [
+            'label' => 'customer.product-model',
+            'attr' => [
+                'class' => FormHelper::$_FORM_VALIDATE_CLASS,
+                FormHelper::$_DATA_IS_MULTI_LANGUAGES => '0',
+                FormHelper::$_VALIDATE_CLASS_REQUIRED => '0',
+                FormHelper::$_REF_CLASS => FormHelper::$_FORM_CLASS_EDIT_ID
+            ]
         ])->add('productSerial', TextType::class, [
             'label' => 'customer.product-serial',
             'attr' => [
@@ -72,6 +80,14 @@ class CustomerType extends MasterFormType
                 FormHelper::$_DATA_IS_MULTI_LANGUAGES => '0',
                 FormHelper::$_VALIDATE_CLASS_REQUIRED => '1',
                 FormHelper::$_VALIDATE_CLASS_REQUIRED . '-error' => 'customer.product-serial-required',
+                FormHelper::$_REF_CLASS => FormHelper::$_FORM_CLASS_EDIT_ID
+            ]
+        ])->add('bodySerial', TextType::class, [
+            'label' => 'customer.product-serial',
+            'attr' => [
+                'class' => FormHelper::$_FORM_VALIDATE_CLASS,
+                FormHelper::$_DATA_IS_MULTI_LANGUAGES => '0',
+                FormHelper::$_VALIDATE_CLASS_REQUIRED => '0',
                 FormHelper::$_REF_CLASS => FormHelper::$_FORM_CLASS_EDIT_ID
             ]
         ])->add('gifSerial', TextType::class, [
