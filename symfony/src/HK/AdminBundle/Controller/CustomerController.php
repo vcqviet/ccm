@@ -10,8 +10,6 @@ use HK\AdminBundle\FormType\CustomerType;
 use HK\CoreBundle\Entity\CustomerProductWarranty;
 use HK\CoreBundle\Helper\DateTimeHelper;
 use HK\CoreBundle\Helper\FormHelper;
-use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
-use Symfony\Component\VarDumper\VarDumper;
 
 class CustomerController extends MasterController
 {
