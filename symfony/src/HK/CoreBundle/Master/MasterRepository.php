@@ -432,4 +432,15 @@ class MasterRepository extends EntityRepository
         $paginator = new Paginator($query, true);
         return $paginator->count() > 0;
     }
+
+    public function setIsDeleted(int $id, bool $isDeleted):bool{
+        $entity = $this->findOneBy(['id' => $id]);
+        if($entity) {
+            $entity->setIsDeleted($isDeleted);
+            $this->getEntityManager()->persist($entity);
+            $this->getEntityManager()->flush();
+            return true;
+        }
+        return false;
+    }
 }

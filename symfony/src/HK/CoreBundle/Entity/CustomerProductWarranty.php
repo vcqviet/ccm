@@ -23,11 +23,10 @@ class CustomerProductWarranty extends MasterEntity
 
     /**
      *
-     * @var Customer
      * @ORM\ManyToOne(targetEntity="Customer", inversedBy="warranties", cascade={"persist"})
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
-    private $customer;
+    private Customer $customer;
 
     public function setCustomer(Customer $customer = null)
     {
@@ -40,20 +39,14 @@ class CustomerProductWarranty extends MasterEntity
         return $this->customer;
     }
     /**
-     *
-     * @var integer
-     *
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $customerId;
+    private int $customerId;
 
     /**
-     *
-     * @var string
-     *
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $statusContent;
+    protected string $statusContent;
 
     public function getStatusContent(): ?string
     {
@@ -66,12 +59,9 @@ class CustomerProductWarranty extends MasterEntity
     }
 
     /**
-     *
-     * @var string
-     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    protected $status;
+    protected string $status;
 
     public function getStatus(): ?string
     {
@@ -84,7 +74,6 @@ class CustomerProductWarranty extends MasterEntity
     }
 
     /**
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private ?\DateTime $warrantyDate;

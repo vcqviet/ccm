@@ -10,6 +10,7 @@ use HK\AdminBundle\FormType\CustomerType;
 use HK\CoreBundle\Entity\CustomerProductWarranty;
 use HK\CoreBundle\Helper\DateTimeHelper;
 use HK\CoreBundle\Helper\FormHelper;
+use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
 use Symfony\Component\VarDumper\VarDumper;
 
 class CustomerController extends MasterController
@@ -24,6 +25,7 @@ class CustomerController extends MasterController
     protected $isDisplayPublishedColumn = false;
     protected $hasContent = false;
     protected $hasPhotoModal = false;
+
     public function filterForm(Request $req): Response
     {
         if (!$this->isPermissionView()) {
@@ -117,7 +119,7 @@ class CustomerController extends MasterController
     {
         $dataForm = $req->get($this->form->getName(), []);
 
-        if (intval($dataForm['editId'] ?? -1) > 0 && count($dataForm['warranties'])) {
+        if (intval($dataForm['editId'] ?? -1) > 0) {
             $data = $this->getDoctrine()->getRepository(CustomerProductWarranty::class)->bkGetData(['customer_id']);
             foreach ($data as $dt) {
                 $this->getDoctrine()->getRepository(CustomerProductWarranty::class)->delete($dt->getId());

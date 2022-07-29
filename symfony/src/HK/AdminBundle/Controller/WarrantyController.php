@@ -127,7 +127,7 @@ class WarrantyController extends MasterController
     {
         $dataForm = $req->get($this->form->getName(), []);
 
-        if (intval($dataForm['editId'] ?? -1) > 0 && count($dataForm['warranties'])) {
+        if (intval($dataForm['editId'] ?? -1) > 0) {
             $data = $this->getDoctrine()->getRepository(CustomerProductWarranty::class)->bkGetData(['customer_id']);
             foreach ($data as $dt) {
                 $this->getDoctrine()->getRepository(CustomerProductWarranty::class)->delete($dt->getId());

@@ -89,36 +89,6 @@ class HomeController extends MasterFrontEndController
             'name' => $arrStatus[Order::$_ORDER_STATUS_CANCEL]
         ];
 
-        // $this->dataRender['cities'] = [];
-        // $cities = $this->getDoctrine()
-        //     ->getRepository(City::class)
-        //     ->getData();
-        // foreach ($cities as $ct) {
-        //     $ci = [
-        //         'id' => $ct->getId(),
-        //         'name' => $ct->getName(),
-        //         'districts' => []
-        //     ];
-
-        //     foreach ($ct->getDistricts() as $ds) {
-        //         $di = [
-        //             'id' => $ds->getId(),
-        //             'name' => $ds->getName(),
-        //             'wards' => []
-        //         ];
-        //         foreach ($ds->getWards() as $wd) {
-        //             $di['wards'][$wd->getId() . ''] = [
-        //                 'id' => $wd->getId(),
-        //                 'name' => $wd->getName()
-        //             ];
-        //         }
-        //         $ci['districts'][$di['id'] . ''] = $di;
-        //     }
-        //     $this->dataRender['cities'][$ci['id'] . ''] = $ci;
-        // }
-        //$this->dataRender['cities'] = json_encode($this->dataRender['cities'], JSON_UNESCAPED_UNICODE);
-        //print_r($this->dataRender['cities']);
-        //die;
         $this->dataRender['phone_providers'] = [];
         $providers = $this->getDoctrine()
             ->getRepository(PhoneProvider::class)
