@@ -6,8 +6,9 @@ use DateInterval;
 use DateTime;
 use HK\CoreBundle\Master\MasterRepository;
 use Doctrine\ORM\QueryBuilder;
+use HK\CoreBundle\Entity\Customer;
 use HK\CoreBundle\Entity\CustomerProductWarranty;
-use Symfony\Component\VarDumper\VarDumper;
+use HK\CoreBundle\Helper\DateTimeHelper;
 
 class CustomerRepository extends MasterRepository
 {
@@ -65,5 +66,49 @@ class CustomerRepository extends MasterRepository
             }
         }
         return $query;
+    }
+    public function import($rows = [], $rowTitle = [])
+    {
+        $rt = ['count' => 0, 'error' => [$rowTitle]]; 
+        $count = 0;
+        $step = 50;
+        foreach ($rows as $row) {
+            $customer = $this->add($row);
+            if (!$customer || $customer == null) {
+                $rt['error'][] = $row;
+                continue;
+            }
+            $this->getEntityManager()->persist($customer);
+            if (++$count >= $step) {
+                $count = 0; 
+                $this->getEntityManager()->flush();
+               // $this->getEntityManager()->clear();
+            }
+            $rt['count']++;
+        }
+        $this->getEntityManager()->clear();
+        return $rt;
+    }
+    public function add($data = [])
+    {
+        if(empty($data[0] ?? null) || empty($data[1] ?? null) || empty($data[5] ?? null)) {
+            return null;
+        }
+        try {
+            $customer = new Customer();
+            $customer->setOrderDate(DateTimeHelper::instance()->getDateTimeFromExcel($data[0]));
+            $customer->setFullName($data[1]);
+            $customer->setPhoneNumber($data[2] ?? '');
+            $customer->setAddress($data[3] ?? '');
+            $arrSeries = explode("\n", $data[5] ?? '');
+            if(count($arrSeries) != 2) {
+                return null;
+            }
+            $customer->setProductModel($data[4] ?? '');
+            $customer->setProductSerial($arrSeries[0]);
+            $customer->setBodySerial($arrSeries[1]);
+            return $customer;
+        } catch (\Exception $ex) { }
+        return null;
     }
 }

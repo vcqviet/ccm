@@ -66,7 +66,7 @@ class Customer extends MasterEntity
 
 
     /**
-     * @ORM\Column(type="string", nullable=true, length=20)
+     * @ORM\Column(type="string", nullable=true, length=255)
      */
     private ?string $phoneNumber;
 
@@ -81,7 +81,7 @@ class Customer extends MasterEntity
     }
 
     /**
-     * @ORM\Column(type="string", nullable=true, length=20)
+     * @ORM\Column(type="string", nullable=true, length=255)
      */
     private ?string $fullName;
 
@@ -96,7 +96,7 @@ class Customer extends MasterEntity
     }
 
     /**
-     * @ORM\Column(type="string", nullable=true, length=20)
+     * @ORM\Column(type="string", nullable=true, length=255)
      */
     private ?string $productModel;
 
@@ -111,7 +111,7 @@ class Customer extends MasterEntity
     }
 
     /**
-     * @ORM\Column(type="string",nullable=true,  length=20)
+     * @ORM\Column(type="string",nullable=true,  length=255)
      */
     private ?string $productSerial;
 
@@ -126,7 +126,7 @@ class Customer extends MasterEntity
     }
 
     /**
-     * @ORM\Column(type="string", nullable=true, length=20)
+     * @ORM\Column(type="string", nullable=true, length=255)
      */
     private ?string $gifSerial;
 
