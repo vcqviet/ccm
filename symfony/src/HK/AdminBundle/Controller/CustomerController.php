@@ -101,7 +101,7 @@ class CustomerController extends MasterController
 
                 'fullName' => $item->getFullName(),
                 'productModel' => $item->getProductModel(),
-                'productSerial' => $item->getProductSerial(),
+                'productSerial' => $item->getProductSerial() . '<br/>' . $item->getBodySerial(),
                 'gifSerial' => $item->getGifSerial(),
                 'phoneNumber' => $item->getPhoneNumber(),
                 'emailAddress' => $item->getEmailAddress(),

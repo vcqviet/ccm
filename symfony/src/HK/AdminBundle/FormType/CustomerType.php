@@ -74,6 +74,14 @@ class CustomerType extends MasterFormType
                 FormHelper::$_VALIDATE_CLASS_REQUIRED . '-error' => 'customer.product-serial-required',
                 FormHelper::$_REF_CLASS => FormHelper::$_FORM_CLASS_EDIT_ID
             ]
+        ])->add('bodySerial', TextType::class, [
+            'label' => 'customer.product-serial',
+            'attr' => [
+                'class' => FormHelper::$_FORM_VALIDATE_CLASS,
+                FormHelper::$_DATA_IS_MULTI_LANGUAGES => '0',
+                FormHelper::$_VALIDATE_CLASS_REQUIRED => '0',
+                FormHelper::$_REF_CLASS => FormHelper::$_FORM_CLASS_EDIT_ID
+            ]
         ])->add('gifSerial', TextType::class, [
             'label' => 'customer.gif-serial',
             'attr' => [
